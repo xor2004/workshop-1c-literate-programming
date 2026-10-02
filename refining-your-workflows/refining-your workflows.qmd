@@ -12,48 +12,46 @@ format-links: false
 bibliography: ref.bib
 ---
 
-# Welcome Back! 
+# Welcome Back!
 
-## Today's objectives 
+## Today's objectives
 
-1. use R code within Quarto for single-document literate programming tasks
-2. critique and refine default R outputs (such as plots and tables) for reports
-3. understand how and when to show code within reports
-4. use style guides and directory templates to provide a consistent structure across projects
+1.  use R code within Quarto for single-document literate programming tasks
+2.  critique and refine default R outputs (such as plots and tables) for reports
+3.  understand how and when to show code within reports
+4.  use style guides and directory templates to provide a consistent structure across projects
 
 # Literate Programming
 
-## What is literate programming? 
+## What is literate programming?
 
-- A paradigm that combines:  
-  - **Code** (that executes)  
-  - **Narrative** (that explains)  
-- Result: documents that are both **human-readable** and **machine-executable**  
+-   A paradigm that combines:
+    -   **Code** (that executes)\
+    -   **Narrative** (that explains)\
+-   Result: documents that are both **human-readable** and **machine-executable**
 
 Examples of literate programming software: Rmarkdown, JuPyteR, Quarto.
 
-## What is Quarto? 
+## What is Quarto?
 
-[Quarto](https://quarto.org/) is a tool that lets us compile `.md`, `.ipynb`, `.Rmd` or `.qmd` files into pdf of html documents (reports, websites, books, slides). 
+[Quarto](https://quarto.org/) is a tool that lets us compile `.md`, `.ipynb`, `.Rmd` or `.qmd` files into pdf of html documents (reports, websites, books, slides).
 
 Quarto succeeds RMarkdown with back-compatibility. This means you can use it from the command line or integrate with your favourite text editor.
 
+## Adding code blocks
 
-## Adding code blocks 
+The basic markdown we have met already forms the backbone writing quarto documents. What makes it literate programming is the inclusion of code.
 
-The basic markdown we have met already forms the backbone writing quarto documents. What makes it literate programming is the inclusion of code. 
-
-You have seen many examples in the first two workshops fo code blocks. 
+You have seen many examples in the first two workshops fo code blocks.
 
 ```{{r}}
 # use :: to access data or functions from within a package 
 penguins <- palmerpenguins::penguins 
 ```
 
-
 ```{r}
 # use :: to access data or functions from within a package 
-penguins <- palmerpenguins::penguins 
+penguins <- palmerpenguins::penguins
 ```
 
 ## Unwanted Warnings
@@ -71,7 +69,6 @@ library(palmerpenguins)
 library(palmerpenguins)
 ```
 
-
 ```{r}
 #| warning: false
 library(palmerpenguins)
@@ -86,12 +83,10 @@ Sometimes you want people to do as you say, not as you do. For example, I might 
 install.packages("palmerpengins")
 ```
 
-
 ```{r}
 #| eval: false
 install.packages("palmerpengins")
 ```
-
 
 ## Code blocks that run but don't show
 
@@ -101,17 +96,15 @@ plot(x = penguins$bill_length_mm,
      y = penguins$bill_depth_mm)
 ```
 
-
 ```{r}
 #| echo: false
 plot(x = penguins$bill_length_mm, 
      y = penguins$bill_depth_mm)
 ```
 
-
 ## Multiple outputs
 
-When you have multiple objects being printed in a single block, these will often get split up when the document is rendered. 
+When you have multiple objects being printed in a single block, these will often get split up when the document is rendered.
 
 ```{{r}}
 mean(penguins$body_mass_g, na.rm = TRUE)
@@ -139,7 +132,7 @@ mean(penguins$body_mass_g, na.rm = TRUE)
 median(penguins$body_mass_g, na.rm = TRUE)
 ```
 
-## Motivating Example 
+## Motivating Example
 
 To give us an example to play with, we could consider the following question: are the average weights of all species of penguin the same?
 
@@ -152,14 +145,13 @@ plot(x = penguins$species,
 abline(h = mean(penguins$body_mass_g, na.rm = TRUE), col = 2, lwd = 2)
 ```
 
-## Tables 
+## Tables
 
-How many penguins of each species do we have? 
+How many penguins of each species do we have?
 
 ```{r}
 table(penguins$species)
 ```
-
 
 ```{r}
 # fit linear model
@@ -170,7 +162,7 @@ mass_lm_coefficients <- summary(mass_lm)$coefficients[,1:2]
 mass_lm_coefficients
 ```
 
-## Nicer Tables 
+## Nicer Tables
 
 ### Example 1
 
@@ -214,14 +206,13 @@ knitr::kable(
   col.names = c("MLE", "Std. Err"))
 ```
 
-
 ## A Semi-scripted approach {#sec-semi-scripted}
 
-In report-style assessments you will not usually display your code in the main body of the report. In that case you can still use literate programming but you should: 
+In report-style assessments you will not usually display your code in the main body of the report. In that case you can still use literate programming but you should:
 
-- hide all of your code blocks
-- clearly section your code with structural comments
-- include an extra code block at the end of the report (this is in the template by default). 
+-   hide all of your code blocks
+-   clearly section your code with structural comments
+-   include an extra code block at the end of the report (this is in the template by default).
 
 ```{r}
 #######################
@@ -246,10 +237,9 @@ rm(n, x, y, type)
 plot(x = sim$x, y = sim$y)
 ```
 
-
 # Labeling and Referencing {#sec-labeling}
 
-## Referencing TLDR 
+## Referencing TLDR
 
 Quarto allows us to add hyperlinked references to many parts of the docuements we write.
 
@@ -257,9 +247,9 @@ This is useful because these references will auto-update if we modify or reorder
 
 To reference a part of the document, you first label it and then reference that label.
 
-- Label items of markdown using the `{#type-label}` 
-- Label code output with the `#| label: type-label` 
-- Reference either in the main text using `@type-label`
+-   Label items of markdown using the `{#type-label}`
+-   Label code output with the `#| label: type-label`
+-   Reference either in the main text using `@type-label`
 
 Standard reference types: `sec`, `fig`, `tbl`, `eq`.
 
@@ -267,7 +257,7 @@ Examples to follow and for full documentation see [Quarto Cross-References](http
 
 **NOTE:** The coursework template demonstrates an alternative referencing method using the {bookdown} package.
 
-## Referencing Sections and Subsections 
+## Referencing Sections and Subsections
 
 ``` markdown
 # Labeling and Referencing {#sec-labeling}
@@ -276,7 +266,6 @@ Examples to follow and for full documentation see [Quarto Cross-References](http
 ```
 
 @sec-labeling focuses on labelling and referencing parts of your document.
-
 
 ## Referencing Tables
 
@@ -298,7 +287,7 @@ kable(head(penguins)[ ,1:6])
 
 @tbl-palmer gives example data entries from the Palmer penguins dataset. In your reports, all tables should have a caption and be discussed in the main text.
 
-## Referencing Figures 
+## Referencing Figures
 
 ```{r}
 #| label: fig-sim-data
@@ -314,14 +303,13 @@ Simulating data can be an important tool to understand how models behave in idea
 $$ e^{\pi i} + 1 = 0.$${#eq-euler}
 ```
 
-$$ e^{\pi i} + 1 = 0.$${#eq-euler}
+$$ e^{\pi i} + 1 = 0.$$ {#eq-euler}
 
-@eq-euler states an elegant and well known result. By convention, equations should only be numbered if they are mentioned in the main text.  
+@eq-euler states an elegant and well known result. By convention, equations should only be numbered if they are mentioned in the main text.
 
-## Citing Sources 
+## Citing Sources
 
 Add a bibliography to your document using the bibliography YAML metadata field. As for LaTeX this should point to a `.bib` file, detailing the sources you will cite. I have provided a small example bibliography file `ref.bib`.
-
 
 ``` markdown
 ---
@@ -332,7 +320,7 @@ bibliography: ref.bib
 
 By default, Pandoc will automatically generate a list of works cited and place it in the document if the style calls for it. It will be placed in a div with the id refs if one exists:
 
-``` markdown 
+``` markdown
 ### References
 
 ::: {#refs}
@@ -341,24 +329,22 @@ By default, Pandoc will automatically generate a list of works cited and place i
 
 To cite books or articles you can use a direct citation to talk about a source such as @box1964analysis within a sentence, or a parenthetical reference to evidence a more general claim [@casella2024statistical] .
 
-Markdown Syntax: 
+Markdown Syntax:
 
-- `@box1964analysis` gives @box1964analysis;
-- `[@casella2024statistical]` gives [@casella2024statistical].
-
+-   `@box1964analysis` gives @box1964analysis;
+-   `[@casella2024statistical]` gives [@casella2024statistical].
 
 Further information in the [citation documentation](https://quarto.org/docs/authoring/citations.html).
 
-
 # Refining Your Figures
 
-## A basic plot 
+## A basic plot
 
 ```{r}
 plot(x = penguins$bill_length_mm, y = penguins$bill_depth_mm)
 ```
 
-## Titles and Subtitles 
+## Titles and Subtitles
 
 ```{r}
 plot(
@@ -368,7 +354,7 @@ plot(
   sub = "Data source: Palmer Penguins")
 ```
 
-## Axis Labels 
+## Axis Labels
 
 ```{r}
 plot(
@@ -391,9 +377,9 @@ plot(
   cex.lab = 1.4)  # relative scaling of axis labels
 ```
 
-## Visual Grammar 
+## Visual Grammar
 
-### Plotting Characters 
+### Plotting Characters
 
 ```{r}
 plot(
@@ -415,6 +401,7 @@ plot(
   pch = 16,
   col = "blue")
 ```
+
 Over-plotting happens when one point or line in a figure obscures another. We can resolve this issue by picking a transparent colour using `rgb()`.
 
 ```{r}
@@ -444,8 +431,7 @@ plot(
   col = penguins$species)
 ```
 
-To make the plot more accessible, we could also alter the plotting character for each species. 
-
+To make the plot more accessible, we could also alter the plotting character for each species.
 
 ```{r}
 #| fig-cap: "Penguin bill dimensions by species: Adelie (black circles), Chinstrap (red triangles) and Gentoo (green diamonds)."
@@ -460,7 +446,7 @@ plot(
   col = penguins$species)
 ```
 
-If we are plotting lines instead, we can also change the line width and type. 
+If we are plotting lines instead, we can also change the line width and type.
 
 ```{r}
 #| fig-cap: Displacement of an undamped simple harmonic oscillator.
@@ -480,8 +466,7 @@ plot(
 
 ```
 
-
-## Layering your plots 
+## Layering your plots
 
 We can overlay a line on our previous plot using `lines()`.
 
@@ -513,7 +498,7 @@ lines(x = time, y = spring_2, lwd = 2)
 points(x = c(2, 10, 18, 26) * pi, y = rep(13, 4), pch = 16, col = "red")
 ```
 
-Finally, we might want to add a legend layer to our earlier scatterplot in @fig-penguin-scatter. 
+Finally, we might want to add a legend layer to our earlier scatterplot in @fig-penguin-scatter.
 
 ```{r}
 #| fig-cap: "Penguin bill dimensions by species."
@@ -537,8 +522,7 @@ legend(
   bty = "n")
 ```
 
-
-## Combining your plots 
+## Combining your plots
 
 ```{{r}}
 #| layout-ncol: 2
@@ -590,46 +574,48 @@ qqnorm(y, cex.axis = 1.4, cex.lab = 1.4, main = "")
 
 @fig-example-plots shows how we can create multiple plots within a code block and then have these appear within the same figure as sub-figures. A probability density function is shown in @fig-example-plots-1, while a quantile-quantile plot is shown in @fig-example-plots-2.
 
+## What goes where? Tiles, Captions and Descriptions
 
+| Aspect | Plot Title | Figure Caption |
+|------------------|---------------------|---------------------------------|
+| Location | Inside or above the plot | Outside the plot |
+| Purpose | Quick context for the plot | Formal description with interpretive context |
+| Referencing | Rarely referenced in the text | Commonly referenced (e.g., “see Figure 1”) |
 
-## What goes where? Tiles, Captions and Descriptions 
-
-
-| Aspect          | Plot Title                      | Figure Caption                                      |
-|-----------------|---------------------------------|-----------------------------------------------------|
-| Location        | Inside or above the plot        | Outside the plot                                    |
-| Purpose         | Quick context for the plot      | Formal description with interpretive context        |
-| Referencing     | Rarely referenced in the text   | Commonly referenced (e.g., “see Figure 1”)          |
-
-Where a figure or table is mentioned in the main text you should explain _how_ it supports any claims that you are making. 
+Where a figure or table is mentioned in the main text you should explain *how* it supports any claims that you are making.
 
 > BAD: @fig-penguin-scatter demonstrates Simpson's paradox.
 
-> GOOD: @fig-penguin-scatter shows that while there appears to be a positive association between bill length and depth _within_ each species, this association disappears or perhaps reverses when considering all species together. This is an example of Simpson's paradox [simpson1951contingency].
+> GOOD: @fig-penguin-scatter shows that while there appears to be a positive association between bill length and depth *within* each species, this association disappears or perhaps reverses when considering all species together. This is an example of Simpson's paradox \[simpson1951contingency\].
 
-## Useful Resources 
+## Useful Resources
 
-- Imperial Coursework Report Template
-- [Quarto documentation](https://quarto.org/docs/guide/)
-- [Make a reprex, please](https://youtu.be/G5Nm-GpmrLw?si=-GkQa9hK1yWiW37-)
-- Telling Stories With Data 
-  - [3 - Reproducilbe workflows](https://tellingstorieswithdata.com/03-workflow.html)
-- R style guides [Google](https://google.github.io/styleguide/Rguide.html), [Tidyverse](https://style.tidyverse.org/).
+-   Imperial Coursework Report Template
 
-- Effective Data Science
-  - [1 - Organising your work](https://eds-notes.zakvarty.com/101-workflows-organising-your-work)
-  - [8 - Exploratory data analysis](https://eds-notes.zakvarty.com/302-edav-analysis)
-  - [9 - Data visualisation](https://eds-notes.zakvarty.com/303-edav-visualisation)
-- [The TidyTuesday Cookbook](https://nrennie.rbind.io/art-of-viz/) 
+-   [Quarto documentation](https://quarto.org/docs/guide/)
 
-# Review 
+-   [Make a reprex, please](https://youtu.be/G5Nm-GpmrLw?si=-GkQa9hK1yWiW37-)
 
-1. use R code within Quarto for single-document literate programming tasks
-2. critique and refine default R outputs (such as plots and tables) for reports
-3. understand how and when to show code within reports
-4. use style guides and directory templates to provide a consistent structure across projects
+-   Telling Stories With Data
 
+    -   [3 - Reproducilbe workflows](https://tellingstorieswithdata.com/03-workflow.html)
 
+-   R style guides [Google](https://google.github.io/styleguide/Rguide.html), [Tidyverse](https://style.tidyverse.org/).
+
+-   Effective Data Science
+
+    -   [1 - Organising your work](https://eds-notes.zakvarty.com/101-workflows-organising-your-work)
+    -   [8 - Exploratory data analysis](https://eds-notes.zakvarty.com/302-edav-analysis)
+    -   [9 - Data visualisation](https://eds-notes.zakvarty.com/303-edav-visualisation)
+
+-   [The TidyTuesday Cookbook](https://nrennie.rbind.io/art-of-viz/)
+
+# Review
+
+1.  use R code within Quarto for single-document literate programming tasks
+2.  critique and refine default R outputs (such as plots and tables) for reports
+3.  understand how and when to show code within reports
+4.  use style guides and directory templates to provide a consistent structure across projects
 
 ### References
 
